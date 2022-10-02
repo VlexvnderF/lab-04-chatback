@@ -1,6 +1,15 @@
 import {PrismaClient} from "@prisma/client";
+import Pusher from "pusher"; 
 
 const prisma = new PrismaClient();
+
+const pusher = new Pusher({
+    appId: "1484030",
+    key: "4c0eab835c7b2dc77125",
+    secret: "548aad77ff25ae20d12a",
+    cluster: "us2",
+    useTLS: true,
+});
 
 export const findAll = async (_req,res) =>{
     try{
@@ -10,6 +19,7 @@ export const findAll = async (_req,res) =>{
             ok:  true,
             data:  users,
         });
+
     } catch(error){
         return res.status(500).json({
             ok: false,
@@ -43,6 +53,9 @@ export const store = async (req,res)=>{
         data: {
             ...body,
         },
+    });
+    pusher.trigger("my-chat", "my-list-contacts", {
+        message: "Call to update list contacts",
     });
 
     res.status(201).json({

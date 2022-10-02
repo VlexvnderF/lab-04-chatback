@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import Pusher from "pusher";
 
 const prisma = new PrismaClient();
 
@@ -16,6 +17,9 @@ export const findAll = async (req, res) => {
     });
   }
 };
+pusher.trigger("my-chat", "my-list-contact",{
+  message: "Call to update list contacts",
+});
 
 export const create = async (req, res) => {
   try {
