@@ -11,9 +11,11 @@ const pusher = new Pusher({
     useTLS: true,
 });
 
-export const findAll = async (_req,res) =>{
+export const findAll = async (req,res) =>{
     try{
-        const users = await prisma.user.findMany();
+        const users = await prisma.user.findMany({
+            where: { id: { not: Number(req.params.id)}},
+        });
 
         res.json({
             ok:  true,
@@ -48,7 +50,7 @@ export const store = async (req,res)=>{
                 data: userByEmail,
             });
         }
-    body.profile_url = `https://avaatars.dicebear.com/api/avataaars/${body.name}.svg`;
+    body.profile_url = `https://avatars.dicebear.com/api/avataaars/${body.name}.svg`;
     const user = await prisma.user.create({
         data: {
             ...body,

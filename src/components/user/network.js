@@ -1,9 +1,9 @@
 import { Router } from "express";
 import * as Controller from "./controller";
 
-const userTRouter = Router();
+const userRouter = Router();
 
-userTRouter.get("/", Controller.findAll);
-userTRouter.post("/", Controller.store);
+userRouter.get("/:id", Controller.findAll);
+userRouter.post("/", Controller.store);
 
-export default userTRouter;
+export default userRouter;
